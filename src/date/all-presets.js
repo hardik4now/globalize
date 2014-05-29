@@ -1,7 +1,8 @@
 define([
+	"../common/format-message",
 	"../util/array/map",
 	"../util/object/values"
-], function( arrayMap, objectValues ) {
+], function( formatMessage, arrayMap, objectValues ) {
 
 /**
  * allPreset()
@@ -27,15 +28,16 @@ return function( cldr ) {
 		if ( typeof datetimeFormat !== "string" ) {
 			return datetimeFormat;
 		}
-		return datetimeFormat
-			.replace( /\{0\}/, cldr.main([
+		return formatMessage( datetimeFormat, [
+			cldr.main([
 				"dates/calendars/gregorian/timeFormats",
 				key
-			]))
-			.replace( /\{1\}/, cldr.main([
+			]),
+			cldr.main([
 				"dates/calendars/gregorian/dateFormats",
 				key
-			]));
+			])
+		]);
 	}));
 
 	return arrayMap( result, function( pattern ) {
