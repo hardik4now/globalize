@@ -1,5 +1,10 @@
 define([
 	"cldr",
+	"./common/validate/presence",
+	"./common/validate/type",
+	"./common/validate/type/date",
+	"./common/validate/type/date-pattern",
+	"./common/validate/type/string",
 	"./core",
 	"./date/all-presets",
 	"./date/expand-pattern",
@@ -8,7 +13,7 @@ define([
 	"./util/always-array",
 	"./util/array/some",
 	"cldr/supplemental"
-], function( Cldr, Globalize, dateAllPresets, dateExpandPattern, dateFormat, dateParse, alwaysArray, arraySome ) {
+], function( Cldr, validatePresence, validateTypeDataType, validateTypeDate, validateTypeDatePattern, validateTypeString, Globalize, dateAllPresets, dateExpandPattern, dateFormat, dateParse, alwaysArray, arraySome ) {
 
 /**
  * .formatDate( value, pattern )
@@ -23,15 +28,13 @@ Globalize.formatDate =
 Globalize.prototype.formatDate = function( value, pattern ) {
 	var cldr;
 
-	if ( !( value instanceof Date ) ) {
-		throw new Error( "Value is not date" );
-	}
-
-	if ( !pattern ) {
-		throw new Error( "Missing pattern" );
-	}
+	validatePresence( value, "value" );
+	validatePresence( pattern, "pattern" );
+	validateTypeDate( value, "value" );
+	validateTypeDatePattern( pattern, "pattern" );
 
 	cldr = this.cldr;
+
 	pattern = dateExpandPattern( pattern, cldr );
 	return dateFormat( value, pattern, cldr );
 };
@@ -49,9 +52,8 @@ Globalize.parseDate =
 Globalize.prototype.parseDate = function( value, patterns ) {
 	var cldr, date;
 
-	if ( typeof value !== "string" ) {
-		throw new Error( "invalid value (" + value + "), string expected" );
-	}
+	validatePresence( value, "value" );
+	validateTypeString( value, "value" );
 
 	cldr = this.cldr;
 
@@ -62,6 +64,7 @@ Globalize.prototype.parseDate = function( value, patterns ) {
 	}
 
 	arraySome( patterns, function( pattern ) {
+		validateTypeDatePattern( pattern, "one of the patterns" );
 		pattern = dateExpandPattern( pattern, cldr );
 		date = dateParse( value, pattern, cldr );
 		return !!date;
