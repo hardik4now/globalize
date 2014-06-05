@@ -1,4 +1,6 @@
-define(function() {
+define([
+	"../common/cldr/main"
+], function( cldrMain ) {
 
 /**
  * NumberingSystem( cldr )
@@ -6,7 +8,7 @@ define(function() {
  * TODO support ( native | traditional | finance ).
  */
 return function( cldr ) {
-	return cldr.main( "numbers/defaultNumberingSystem" );
+	return cldrMain( cldr, "numbers/defaultNumberingSystem" );
 };
 
 });

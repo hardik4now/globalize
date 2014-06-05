@@ -74,6 +74,11 @@ return {
 
 	assertStringParameter: function( assert, name, fn ) {
 		assertParameterType( assert, "string", name, fn );
+	},
+
+	resetCldrContent: function() {
+		Cldr._resolved = {};
+		Cldr._raw = {};
 	}
 };
 

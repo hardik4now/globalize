@@ -34,5 +34,6 @@
 var createError = Globalize._createError,
 	formatMessage = Globalize._formatMessage,
 	isPlainObject = Globalize._isPlainObject,
+	validateCldr = Globalize._validateCldr,
 	validatePresence = Globalize._validatePresence,
 	validateType = Globalize._validateType;

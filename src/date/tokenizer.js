@@ -1,7 +1,8 @@
 define([
 	"./pattern-re",
+	"../common/cldr/main",
 	"../util/array/every"
-], function( datePatternRe, arrayEvery ) {
+], function( datePatternRe, cldrMain, arrayEvery ) {
 
 /**
  * tokenizer( value, pattern )
@@ -60,7 +61,7 @@ return function( value, pattern, cldr ) {
 		// Return the first found one (and set token accordingly), or null.
 		function lookup( path ) {
 			var i, re,
-				data = cldr.main( path );
+				data = cldrMain( cldr, path );
 			for ( i in data ) {
 				re = new RegExp( "^" + data[ i ] );
 				if ( re.test( value ) ) {

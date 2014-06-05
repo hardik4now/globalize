@@ -1,5 +1,6 @@
 define([
 	"./core",
+	"./common/validate/cldr",
 	"./common/validate/presence",
 	"./common/validate/type/number",
 	"./common/validate/type/plain-object",
@@ -7,7 +8,7 @@ define([
 	"./number/format",
 	"./number/parse",
 	"./number/pattern"
-], function( Globalize, validatePresence, validateTypeNumber, validateTypePlainObject, validateTypeString, numberFormat, numberParse, numberPattern ) {
+], function( Globalize, validateCldr, validatePresence, validateTypeNumber, validateTypePlainObject, validateTypeString, numberFormat, numberParse, numberPattern ) {
 
 /**
  * .formatNumber( value, pattern )
@@ -31,11 +32,15 @@ Globalize.prototype.formatNumber = function( value, attributes ) {
 	attributes = attributes || {};
 	cldr = this.cldr;
 
-	if ( !attributes.pattern ) {
-		pattern = numberPattern( attributes.style || "decimal", cldr );
-	}
+	try {
+		if ( !attributes.pattern ) {
+			pattern = numberPattern( attributes.style || "decimal", cldr );
+		}
 
-	return numberFormat( value, pattern, cldr, attributes );
+		return numberFormat( value, pattern, cldr, attributes );
+	} catch( error ) {
+		throw validateCldr( error );
+	}
 };
 
 /**
@@ -54,10 +59,14 @@ Globalize.prototype.parseNumber = function( value ) {
 
 	cldr = this.cldr;
 
-	// TODO: What about per mille? Which "style" does it belong to?
-	pattern = numberPattern( value.indexOf( "%" ) !== -1 ? "percent" : "decimal", cldr );
+	try {
+		// TODO: What about per mille? Which "style" does it belong to?
+		pattern = numberPattern( value.indexOf( "%" ) !== -1 ? "percent" : "decimal", cldr );
 
-	return numberParse( value, pattern, cldr );
+		return numberParse( value, pattern, cldr );
+	} catch( error ) {
+		throw validateCldr( error );
+	}
 };
 
 return Globalize;
