@@ -48,7 +48,7 @@ return function( value, pattern, cldr ) {
 		if ( chr === "j" ) {
 			// Locale preferred hHKk.
 			// http://www.unicode.org/reports/tr35/tr35-dates.html#Time_Data
-			chr = cldr.supplemental.timeData.preferred();
+			chr = cldr.supplemental.timeData.preferred({ throw: true });
 		}
 
 		switch ( chr ) {

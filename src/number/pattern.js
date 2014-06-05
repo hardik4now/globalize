@@ -1,6 +1,7 @@
 define([
-	"./numbering-system"
-], function( numberNumberingSystem ) {
+	"./numbering-system",
+	"../common/cldr/main"
+], function( numberNumberingSystem, cldrMain ) {
 
 /**
  * Pattern( style )
@@ -14,7 +15,7 @@ return function( style, cldr ) {
 		throw new Error( "Invalid style" );
 	}
 
-	return cldr.main([
+	return cldrMain( cldr, [
 		"numbers",
 		style + "Formats-numberSystem-" + numberNumberingSystem( cldr ),
 		"standard"

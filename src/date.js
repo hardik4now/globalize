@@ -1,5 +1,6 @@
 define([
 	"cldr",
+	"./common/validate/cldr",
 	"./common/validate/presence",
 	"./common/validate/type",
 	"./common/validate/type/date",
@@ -13,7 +14,7 @@ define([
 	"./util/always-array",
 	"./util/array/some",
 	"cldr/supplemental"
-], function( Cldr, validatePresence, validateTypeDataType, validateTypeDate, validateTypeDatePattern, validateTypeString, Globalize, dateAllPresets, dateExpandPattern, dateFormat, dateParse, alwaysArray, arraySome ) {
+], function( Cldr, validateCldr, validatePresence, validateTypeDataType, validateTypeDate, validateTypeDatePattern, validateTypeString, Globalize, dateAllPresets, dateExpandPattern, dateFormat, dateParse, alwaysArray, arraySome ) {
 
 /**
  * .formatDate( value, pattern )
@@ -35,8 +36,12 @@ Globalize.prototype.formatDate = function( value, pattern ) {
 
 	cldr = this.cldr;
 
-	pattern = dateExpandPattern( pattern, cldr );
-	return dateFormat( value, pattern, cldr );
+	try {
+		pattern = dateExpandPattern( pattern, cldr );
+		return dateFormat( value, pattern, cldr );
+	} catch( error ) {
+		throw validateCldr( error );
+	}
 };
 
 /**
@@ -57,20 +62,24 @@ Globalize.prototype.parseDate = function( value, patterns ) {
 
 	cldr = this.cldr;
 
-	if ( !patterns ) {
-		patterns = dateAllPresets( cldr );
-	} else {
-		patterns = alwaysArray( patterns );
+	try {
+		if ( !patterns ) {
+			patterns = dateAllPresets( cldr );
+		} else {
+			patterns = alwaysArray( patterns );
+		}
+
+		arraySome( patterns, function( pattern ) {
+			validateTypeDatePattern( pattern, "one of the patterns" );
+			pattern = dateExpandPattern( pattern, cldr );
+			date = dateParse( value, pattern, cldr );
+			return !!date;
+		});
+
+		return date || null;
+	} catch( error ) {
+		throw validateCldr( error );
 	}
-
-	arraySome( patterns, function( pattern ) {
-		validateTypeDatePattern( pattern, "one of the patterns" );
-		pattern = dateExpandPattern( pattern, cldr );
-		date = dateParse( value, pattern, cldr );
-		return !!date;
-	});
-
-	return date || null;
 };
 
 return Globalize;

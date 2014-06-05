@@ -7,7 +7,7 @@ define([
  * firstDayOfWeek
  */
 return function( cldr ) {
-	return arrayIndexOf( dateWeekDays, cldr.supplemental.weekData.firstDay() );
+	return arrayIndexOf( dateWeekDays, cldr.supplemental.weekData.firstDay({ throw: true }) );
 };
 
 });

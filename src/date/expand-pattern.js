@@ -1,7 +1,8 @@
 define([
+	"../common/cldr/main",
 	"../common/format-message",
 	"../common/create-error"
-], function( formatMessage, createError ) {
+], function( cldrMain, formatMessage, createError ) {
 
 /**
  * expandPattern( pattern, cldr )
@@ -33,7 +34,7 @@ return function( pattern, cldr ) {
 
 	switch ( true ) {
 		case "skeleton" in pattern:
-			result = cldr.main([
+			result = cldrMain( cldr, [
 				"dates/calendars/gregorian/dateTimeFormats/availableFormats",
 				pattern.skeleton
 			]);
@@ -41,7 +42,7 @@ return function( pattern, cldr ) {
 
 		case "date" in pattern:
 		case "time" in pattern:
-			result = cldr.main([
+			result = cldrMain( cldr, [
 				"dates/calendars/gregorian",
 				"date" in pattern ? "dateFormats" : "timeFormats",
 				( pattern.date || pattern.time )
@@ -49,17 +50,17 @@ return function( pattern, cldr ) {
 			break;
 
 		case "datetime" in pattern:
-			result = cldr.main([
+			result = cldrMain( cldr, [
 				"dates/calendars/gregorian/dateTimeFormats",
 				pattern.datetime
 			]);
 			if ( result ) {
 				result = formatMessage( result, [
-					cldr.main([
+					cldrMain( cldr, [
 						"dates/calendars/gregorian/timeFormats",
 						pattern.datetime
 					]),
-					cldr.main([
+					cldrMain( cldr, [
 						"dates/calendars/gregorian/dateFormats",
 						pattern.datetime
 					])

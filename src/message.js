@@ -1,12 +1,13 @@
 define([
 	"cldr",
 	"./core",
+	"./common/cldr/get",
 	"./common/validate/presence",
 	"./common/validate/type",
 	"./common/validate/type/plain-object",
 	"./util/array/is-array",
 	"./util/always-array"
-], function( Cldr, Globalize, validatePresence, validateType, validateTypePlainObject, arrayIsArray, alwaysArray ) {
+], function( Cldr, Globalize, cldrGet, validatePresence, validateType, validateTypePlainObject, arrayIsArray, alwaysArray ) {
 
 /**
  * .loadTranslations( json )
@@ -40,7 +41,7 @@ Globalize.prototype.translate = function( path ) {
 
 	path = alwaysArray( path );
 
-	return this.cldr.get( [ "globalize-translations/{languageId}" ].concat( path ) );
+	return cldrGet( this.cldr, [ "globalize-translations/{languageId}" ].concat( path ) );
 };
 
 return Globalize;

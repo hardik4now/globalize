@@ -2,6 +2,7 @@ define([
 	"cldr",
 	"./common/create-error",
 	"./common/format-message",
+	"./common/validate/cldr",
 	"./common/validate/presence",
 	"./common/validate/type",
 	"./common/validate/type/locale",
@@ -9,7 +10,15 @@ define([
 	"./util/always-cldr",
 	"./util/is-plain-object",
 	"./util/object/keys"
-], function( Cldr, createError, formatMessage, validatePresence, validateType, validateTypeLocale, validateTypePlainObject, alwaysCldr, isPlainObject, objectKeys ) {
+], function( Cldr, createError, formatMessage, validateCldr, validatePresence, validateType, validateTypeLocale, validateTypePlainObject, alwaysCldr, isPlainObject, objectKeys ) {
+
+function validateLikelySubtags( cldr ) {
+	try {
+		cldr.get( "supplemental/likelySubtags", { throw: true });
+	} catch( error ) {
+		throw validateCldr( error );
+	}
+}
 
 /**
  * [new] Globalize( locale|cldr )
@@ -29,6 +38,8 @@ function Globalize( locale ) {
 	validateTypeLocale( locale, "locale" );
 
 	this.cldr = alwaysCldr( locale );
+
+	validateLikelySubtags( this.cldr );
 }
 
 /**
@@ -62,6 +73,7 @@ Globalize.locale = function( locale ) {
 
 	if ( arguments.length ) {
 		this.cldr = alwaysCldr( locale );
+		validateLikelySubtags( this.cldr );
 	}
 	return this.cldr;
 };
@@ -73,6 +85,7 @@ Globalize._createError = createError;
 Globalize._formatMessage = formatMessage;
 Globalize._isPlainObject = isPlainObject;
 Globalize._objectKeys = objectKeys;
+Globalize._validateCldr = validateCldr;
 Globalize._validatePresence = validatePresence;
 Globalize._validateTypePlainObject = validateTypePlainObject;
 Globalize._validateType = validateType;

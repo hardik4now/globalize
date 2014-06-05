@@ -10,13 +10,19 @@ define([
 
 var pi = 3.14159265359;
 
-Globalize.load( arNumbers );
-Globalize.load( enNumbers );
-Globalize.load( esNumbers );
-Globalize.load( likelySubtags );
-Globalize.locale( "en" );
+function extraSetup() {
+	Globalize.load( arNumbers );
+	Globalize.load( enNumbers );
+	Globalize.load( esNumbers );
+}
 
-QUnit.module( "Number Format" );
+QUnit.module( "Number Format", {
+	setup: function() {
+		Globalize.load( likelySubtags );
+		Globalize.locale( "en" );
+	},
+	teardown: util.resetCldrContent
+});
 
 QUnit.test( "should validate parameters", function( assert ) {
 	assert.throws(function() {
@@ -36,7 +42,27 @@ QUnit.test( "should validate parameters", function( assert ) {
 	});
 });
 
+QUnit.test( "should validate CLDR content", function( assert ) {
+	assert.throws(function() {
+		Globalize.formatNumber( pi );
+	}, /E_MISSING_CLDR/, "Missing required CLDR content" );
+
+	Globalize.load({
+		main: {
+			en: {
+				numbers: {}
+			}
+		}
+	});
+
+	assert.throws(function() {
+		Globalize.formatNumber( pi );
+	}, /E_MISSING_CLDR/, "Missing CLDR resource item" );
+});
+
 QUnit.test( "should format decimal style", function( assert ) {
+	extraSetup();
+
 	assert.equal( Globalize.formatNumber( pi ), "3.142" );
 	assert.equal( Globalize( "es" ).formatNumber( pi ), "3,142" );
 	assert.equal( Globalize( "ar" ).formatNumber( pi ), "3٫142" );
@@ -72,6 +98,8 @@ QUnit.test( "should format decimal style", function( assert ) {
 });
 
 QUnit.test( "should format percent style", function( assert ) {
+	extraSetup();
+
 	assert.equal( Globalize.formatNumber( pi, { style: "percent" } ), "314%" );
 	assert.equal( Globalize( "ar" ).formatNumber( pi, { style: "percent" } ), "314٪" );
 });
