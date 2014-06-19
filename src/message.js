@@ -2,12 +2,13 @@ define([
 	"cldr",
 	"./core",
 	"./common/cldr/get",
+	"./common/validate/default-locale",
 	"./common/validate/presence",
 	"./common/validate/type",
 	"./common/validate/type/plain-object",
 	"./util/array/is-array",
 	"./util/always-array"
-], function( Cldr, Globalize, cldrGet, validatePresence, validateType, validateTypePlainObject, arrayIsArray, alwaysArray ) {
+], function( Cldr, Globalize, cldrGet, validateDefaultLocale, validatePresence, validateType, validateTypePlainObject, arrayIsArray, alwaysArray ) {
 
 /**
  * .loadTranslations( json )
@@ -36,12 +37,17 @@ Globalize.loadTranslations = function( json ) {
  */
 Globalize.translate =
 Globalize.prototype.translate = function( path ) {
+	var cldr;
+
 	validatePresence( path, "path" );
 	validateType( path, "path", typeof path === "string" || arrayIsArray( path ), "a String nor an Array");
 
 	path = alwaysArray( path );
+	cldr = this.cldr;
 
-	return cldrGet( this.cldr, [ "globalize-translations/{languageId}" ].concat( path ) );
+	validateDefaultLocale( cldr );
+
+	return cldrGet( cldr, [ "globalize-translations/{languageId}" ].concat( path ) );
 };
 
 return Globalize;

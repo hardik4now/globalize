@@ -27,6 +27,7 @@
 	}
 }(this, function( Cldr, Globalize ) {
 
-var validatePresence = Globalize._validatePresence,
+var validateDefaultLocale = Globalize._validateDefaultLocale,
+	validatePresence = Globalize._validatePresence,
 	validateType = Globalize._validateType,
 	validateTypePlainObject = Globalize._validateTypePlainObject;

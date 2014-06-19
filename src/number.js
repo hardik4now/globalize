@@ -1,6 +1,7 @@
 define([
 	"./core",
 	"./common/validate/cldr",
+	"./common/validate/default-locale",
 	"./common/validate/presence",
 	"./common/validate/type/number",
 	"./common/validate/type/plain-object",
@@ -8,7 +9,7 @@ define([
 	"./number/format",
 	"./number/parse",
 	"./number/pattern"
-], function( Globalize, validateCldr, validatePresence, validateTypeNumber, validateTypePlainObject, validateTypeString, numberFormat, numberParse, numberPattern ) {
+], function( Globalize, validateCldr, validateDefaultLocale, validatePresence, validateTypeNumber, validateTypePlainObject, validateTypeString, numberFormat, numberParse, numberPattern ) {
 
 /**
  * .formatNumber( value, pattern )
@@ -31,6 +32,8 @@ Globalize.prototype.formatNumber = function( value, attributes ) {
 
 	attributes = attributes || {};
 	cldr = this.cldr;
+
+	validateDefaultLocale( cldr );
 
 	try {
 		if ( !attributes.pattern ) {
@@ -58,6 +61,8 @@ Globalize.prototype.parseNumber = function( value ) {
 	validateTypeString( value, "value" );
 
 	cldr = this.cldr;
+
+	validateDefaultLocale( cldr );
 
 	try {
 		// TODO: What about per mille? Which "style" does it belong to?
