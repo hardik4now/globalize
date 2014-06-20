@@ -47,6 +47,16 @@ function not( a ) {
 return {
 
 	/**
+	 * CLDR content assertion
+	 */
+	assertCldrContent: function( assert, fn ) {
+		assert.throws( fn, function E_MISSING_CLDR( error ) {
+			return error.code === "E_MISSING_CLDR" &&
+				"path" in error;
+		}, "Expected \"E_MISSING_CLDR\" to be thrown" );
+	},
+
+	/**
 	 * Parameter Presence assertion
 	 */
 	assertParameterPresence: function( assert, name, fn ) {

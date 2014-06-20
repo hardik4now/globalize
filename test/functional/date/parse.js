@@ -50,25 +50,9 @@ QUnit.test( "should validate parameters", function( assert ) {
 });
 
 QUnit.test( "should validate CLDR content", function( assert ) {
-	assert.throws(function() {
+	util.assertCldrContent( assert, function() {
 		Globalize.parseDate( "15", "d" );
-	}, /E_MISSING_CLDR/, "Missing required CLDR content" );
-
-	Globalize.load({
-		main: {
-			en: {
-				dates: {
-					calendars: {
-						gregorian: {}
-					}
-				}
-			}
-		}
 	});
-
-	assert.throws(function() {
-		Globalize.parseDate( "15", "d" );
-	}, /E_MISSING_CLDR/, "Missing CLDR resource item" );
 });
 
 QUnit.test( "should parse skeleton", function( assert ) {

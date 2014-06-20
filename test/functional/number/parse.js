@@ -45,21 +45,9 @@ QUnit.test( "should validate parameters", function( assert ) {
 });
 
 QUnit.test( "should validate CLDR content", function( assert ) {
-	assert.throws(function() {
+	util.assertCldrContent( assert, function() {
 		Globalize.parseNumber( "3" );
-	}, /E_MISSING_CLDR/, "Missing required CLDR content" );
-
-	Globalize.load({
-		main: {
-			en: {
-				numbers: {}
-			}
-		}
 	});
-
-	assert.throws(function() {
-		Globalize.parseNumber( "3" );
-	}, /E_MISSING_CLDR/, "Missing CLDR resource item" );
 });
 
 /**

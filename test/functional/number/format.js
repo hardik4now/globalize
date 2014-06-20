@@ -43,21 +43,9 @@ QUnit.test( "should validate parameters", function( assert ) {
 });
 
 QUnit.test( "should validate CLDR content", function( assert ) {
-	assert.throws(function() {
+	util.assertCldrContent( assert, function() {
 		Globalize.formatNumber( pi );
-	}, /E_MISSING_CLDR/, "Missing required CLDR content" );
-
-	Globalize.load({
-		main: {
-			en: {
-				numbers: {}
-			}
-		}
 	});
-
-	assert.throws(function() {
-		Globalize.formatNumber( pi );
-	}, /E_MISSING_CLDR/, "Missing CLDR resource item" );
 });
 
 QUnit.test( "should format decimal style", function( assert ) {
