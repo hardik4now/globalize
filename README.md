@@ -271,7 +271,9 @@ to you in different flavors):
 Thrown when any static method, eg. `Globalize.formatNumber()` is used prior to
 setting the Global locale with `Globalize.locale( <locale> )`.
 
-| Error object attribute | Value |
+Error object:
+
+| Attribute | Value |
 | --- | --- |
 | code | `E_DEFAULT_LOCALE_NOT_DEFINED` |
 
@@ -280,7 +282,9 @@ setting the Global locale with `Globalize.locale( <locale> )`.
 
 Thrown when a required parameter is missing on any static or instance methods.
 
-| Error object attribute | Value |
+Error object:
+
+| Attribute | Value |
 | --- | --- |
 | code | `E_MISSING_PARAMETER` |
 | name | Name of the missing parameter |
@@ -290,7 +294,9 @@ Thrown when a required parameter is missing on any static or instance methods.
 
 Thrown when a parameter has an invalid type on any static or instance methods.
 
-| Error object attribute | Value |
+Error object:
+
+| Attribute | Value |
 | --- | --- |
 | code | `E_INVALID_PAR_TYPE` |
 | name | Name of the invalid parameter |
@@ -306,7 +312,9 @@ invalid. Currently, the only parameter with such validation is the date format
 variants](https://github.com/jquery/globalize/blob/master/doc/api/date/format.md#parameters),
 if it's none of them, error is thrown.
 
-| Error object attribute | Value |
+Error object:
+
+| Attribute | Value |
 | --- | --- |
 | code | `E_INVALID_PAR_VALUE` |
 | name | Name of the invalid parameter |
@@ -317,7 +325,9 @@ if it's none of them, error is thrown.
 
 Thrown when any required CLDR item is NOT found.
 
-| Error object attribute | Value |
+Error object:
+
+| Attribute | Value |
 | --- | --- |
 | code | `E_MISSING_CLDR` |
 | path | Missing CLDR item path |
