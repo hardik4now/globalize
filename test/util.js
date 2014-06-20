@@ -57,6 +57,15 @@ return {
 	},
 
 	/**
+	 * Default locale assertion
+	 */
+	assertDefaultLocalePresence: function( assert, fn) {
+		assert.throws( fn, function E_DEFAULT_LOCALE_NOT_DEFINED( error ) {
+			return error.code === "E_DEFAULT_LOCALE_NOT_DEFINED";
+		}, "Expected \"E_DEFAULT_LOCALE_NOT_DEFINED\" to be thrown" );
+	},
+
+	/**
 	 * Parameter Presence assertion
 	 */
 	assertParameterPresence: function( assert, name, fn ) {
