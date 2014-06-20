@@ -20,6 +20,11 @@ require([
 	"./unit/date/tokenizer",
 	"./unit/date/parse",
 
+	/* duration */
+	// FIXME REMOVEME
+	// Unit test every function you create.
+	"./unit/duration/format",
+
 	/* message */
 	"./unit/message/translate",
 
