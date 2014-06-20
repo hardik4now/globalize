@@ -265,7 +265,8 @@ to you in different flavors):
 <a name="error"></a>
 ## Error reference
 
-- **`E_DEFAULT_LOCALE_NOT_DEFINED`**
+<a name="E_DEFAULT_LOCALE_NOT_DEFINED"></a>
+#### `E_DEFAULT_LOCALE_NOT_DEFINED`
 
 Thrown when any static method, eg. `Globalize.formatNumber()` is used prior to
 setting the Global locale with `Globalize.locale( <locale> )`.
@@ -276,7 +277,8 @@ Error object:
 | --- | --- |
 | code | `E_DEFAULT_LOCALE_NOT_DEFINED` |
 
-- **`E_MISSING_PARAMETER`**
+<a name="E_MISSING_PARAMETER"></a>
+#### `E_MISSING_PARAMETER`
 
 Thrown when a required parameter is missing on any static or instance methods.
 
@@ -287,7 +289,8 @@ Error object:
 | code | `E_MISSING_PARAMETER` |
 | name | Name of the missing parameter |
 
-- **`E_INVALID_PAR_TYPE`**
+<a name="E_INVALID_PAR_TYPE"></a>
+#### `E_INVALID_PAR_TYPE`
 
 Thrown when a parameter has an invalid type on any static or instance methods.
 
@@ -300,7 +303,8 @@ Error object:
 | value | Invalid value |
 | expected | Expected type |
 
-- **`E_INVALID_PAR_VALUE`**
+<a name="E_INVALID_PAR_VALUE"></a>
+#### `E_INVALID_PAR_VALUE`
 
 Thrown for certain parameters when the type is correct, but the value is
 invalid. Currently, the only parameter with such validation is the date format
@@ -316,7 +320,8 @@ Error object:
 | name | Name of the invalid parameter |
 | value | Invalid value |
 
-- **`E_MISSING_CLDR`**
+<a name="E_MISSING_CLDR"></a>
+#### `E_MISSING_CLDR`
 
 Thrown when any required CLDR item is NOT found.
 
