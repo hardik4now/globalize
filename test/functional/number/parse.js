@@ -33,9 +33,9 @@ QUnit.module( "Number Parse", {
 });
 
 QUnit.test( "should validate parameters", function( assert ) {
-	assert.throws(function() {
+	util.assertParameterPresence( assert, "value", function() {
 		Globalize.parseNumber();
-	}, /E_MISSING_PARAMETER/, "Missing `value` parameter" );
+	});
 
 	util.assertStringParameter( assert, "value", function( invalidValue ) {
 		return function() {

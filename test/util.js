@@ -15,7 +15,12 @@ var allTypes = {
 
 function assertParameterType( assert, type, name, fn ) {
 	Object.keys( allTypes ).filter( not( type ) ).forEach(function( type ) {
-		assert.throws( fn( allTypes[ type ] ), /E_INVALID_PAR_TYPE/, "Invalid `" + name + "` parameter type (" + type + ")" );
+		assert.throws( fn( allTypes[ type ] ), function E_INVALID_PAR_TYPE( error ) {
+			return error.code === "E_INVALID_PAR_TYPE" &&
+				error.name === name &&
+				"value" in error &&
+				"expected" in error;
+		}, "Expected \"E_INVALID_PAR_TYPE: Invalid `" + name + "` parameter type (" + type + ")\" to be thrown" );
 	});
 }
 
@@ -40,6 +45,20 @@ function not( a ) {
 }
 
 return {
+
+	/**
+	 * Parameter Presence assertion
+	 */
+	assertParameterPresence: function( assert, name, fn ) {
+		assert.throws( fn, function E_MISSING_PARAMETER( error ) {
+			return error.code === "E_MISSING_PARAMETER" &&
+				error.name === name;
+		}, "Expected \"E_MISSING_PARAMETER: Missing `" + name + "` parameter\" to be thrown" );
+	},
+
+	/**
+	 * Parameter Type assertions
+	 */
 	assertArrayParameter: function( assert, name, fn ) {
 		assertParameterType( assert, "array", name, fn );
 	},

@@ -30,9 +30,9 @@ QUnit.module( "Translate", {
 });
 
 QUnit.test( "should validate parameters", function( assert ) {
-	assert.throws(function() {
+	util.assertParameterPresence( assert, "path", function() {
 		Globalize.translate();
-	}, /E_MISSING_PARAMETER/, "Missing `path` parameter" );
+	});
 
 	util.assertPathParameter( assert, "path", function( invalidValue ) {
 		return function() {

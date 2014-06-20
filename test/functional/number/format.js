@@ -25,9 +25,9 @@ QUnit.module( "Number Format", {
 });
 
 QUnit.test( "should validate parameters", function( assert ) {
-	assert.throws(function() {
+	util.assertParameterPresence( assert, "value", function() {
 		Globalize.formatNumber();
-	}, /E_MISSING_PARAMETER/, "Missing `value` parameter" );
+	});
 
 	util.assertNumberParameter( assert, "value", function( invalidValue ) {
 		return function() {

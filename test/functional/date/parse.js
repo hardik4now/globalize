@@ -32,9 +32,9 @@ function assertParseDate( assert, input, options, output ) {
 }
 
 QUnit.test( "should validate parameters", function( assert ) {
-	assert.throws(function() {
+	util.assertParameterPresence( assert, "value", function() {
 		Globalize.parseDate();
-	}, /E_MISSING_PARAMETER/, "Missing `value` parameter" );
+	});
 
 	util.assertStringParameter( assert, "value", function( invalidValue ) {
 		return function() {
@@ -42,7 +42,7 @@ QUnit.test( "should validate parameters", function( assert ) {
 		};
 	});
 
-	util.assertDatePatternParameter( assert, "pattern", function( invalidValue ) {
+	util.assertDatePatternParameter( assert, "patterns", function( invalidValue ) {
 		return function() {
 			Globalize.parseDate( "15 Wed", [ invalidValue ] );
 		};

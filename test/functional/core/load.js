@@ -6,9 +6,9 @@ define([
 QUnit.module( "Globalize.load()" );
 
 QUnit.test( "should validate parameters", function( assert ) {
-	assert.throws(function() {
+	util.assertParameterPresence( assert, "json", function() {
 		Globalize.load();
-	}, Error, "Missing `json` parameter" );
+	});
 
 	util.assertPlainObjectParameter( assert, "json", function( invalidValue ) {
 		return function() {

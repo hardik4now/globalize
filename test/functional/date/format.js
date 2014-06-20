@@ -27,9 +27,9 @@ QUnit.module( "Datetime Format", {
 });
 
 QUnit.test( "should validate parameters", function( assert ) {
-	assert.throws(function() {
+	util.assertParameterPresence( assert, "value", function() {
 		Globalize.formatDate();
-	}, /E_MISSING_PARAMETER/, "Missing `value` parameter" );
+	});
 
 	util.assertDateParameter( assert, "value", function( invalidValue ) {
 		return function() {
@@ -37,9 +37,9 @@ QUnit.test( "should validate parameters", function( assert ) {
 		};
 	});
 
-	assert.throws(function() {
+	util.assertParameterPresence( assert, "pattern", function() {
 		Globalize.formatDate( date );
-	}, /E_MISSING_PARAMETER/, "Missing `pattern` parameter" );
+	});
 
 	util.assertDatePatternParameter( assert, "pattern", function( invalidPattern ) {
 		return function() {

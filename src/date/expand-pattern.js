@@ -1,8 +1,8 @@
 define([
 	"../common/cldr/main",
 	"../common/format-message",
-	"../common/create-error"
-], function( cldrMain, formatMessage, createError ) {
+	"../common/create-error/invalid-parameter-value"
+], function( cldrMain, formatMessage, createErrorInvalidParameterValue ) {
 
 /**
  * expandPattern( pattern, cldr )
@@ -73,7 +73,8 @@ return function( pattern, cldr ) {
 			break;
 
 		default:
-			throw createError( "E_INVALID_PAR_VALUE", "Invalid `pattern` value ({value}).", {
+			throw createErrorInvalidParameterValue({
+				name: "pattern",
 				value: pattern
 			});
 	}

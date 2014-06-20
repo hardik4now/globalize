@@ -75,7 +75,7 @@ Globalize.prototype.parseDate = function( value, patterns ) {
 		}
 
 		arraySome( patterns, function( pattern ) {
-			validateTypeDatePattern( pattern, "one of the patterns" );
+			validateTypeDatePattern( pattern, "patterns" );
 			pattern = dateExpandPattern( pattern, cldr );
 			date = dateParse( value, pattern, cldr );
 			return !!date;
