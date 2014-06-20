@@ -27,6 +27,7 @@ Node.js module.
   - [Message module](#message_module)
   - [Number module](#number_module)
   - more to come...
+- [Error reference](#error)
 - [Development](#development)
   - [File structure](#file_structure)
   - [Source files](#source_files)
@@ -259,6 +260,67 @@ to you in different flavors):
   symbols. If value is invalid, `NaN` is returned.
 
  [Read more...](doc/api/number/parse.md)
+
+
+<a name="error"></a>
+## Error reference
+
+<a name="E_DEFAULT_LOCALE_NOT_DEFINED"></a>
+### `E_DEFAULT_LOCALE_NOT_DEFINED`
+
+Thrown when any static method, eg. `Globalize.formatNumber()` is used prior to
+setting the Global locale with `Globalize.locale( <locale> )`.
+
+| Error object attribute | Value |
+| --- | --- |
+| code | `E_DEFAULT_LOCALE_NOT_DEFINED` |
+
+<a name="E_MISSING_PARAMETER"></a>
+### `E_MISSING_PARAMETER`
+
+Thrown when a required parameter is missing on any static or instance methods.
+
+| Error object attribute | Value |
+| --- | --- |
+| code | `E_MISSING_PARAMETER` |
+| name | Name of the missing parameter |
+
+<a name="E_INVALID_PAR_TYPE"></a>
+### `E_INVALID_PAR_TYPE`
+
+Thrown when a parameter has an invalid type on any static or instance methods.
+
+| Error object attribute | Value |
+| --- | --- |
+| code | `E_INVALID_PAR_TYPE` |
+| name | Name of the invalid parameter |
+| value | Invalid value |
+| expected | Expected type |
+
+<a name="E_INVALID_PAR_VALUE"></a>
+### `E_INVALID_PAR_VALUE`
+
+Thrown for certain parameters when the type is correct, but the value is
+invalid. Currently, the only parameter with such validation is the date format
+(for either format and parse). Format allows [certain
+variants](https://github.com/jquery/globalize/blob/master/doc/api/date/format.md#parameters),
+if it's none of them, error is thrown.
+
+| Error object attribute | Value |
+| --- | --- |
+| code | `E_INVALID_PAR_VALUE` |
+| name | Name of the invalid parameter |
+| value | Invalid value |
+
+<a name="E_MISSING_CLDR"></a>
+### `E_MISSING_CLDR`
+
+Thrown when any required CLDR item is NOT found.
+
+| Error object attribute | Value |
+| --- | --- |
+| code | `E_MISSING_CLDR` |
+| path | Missing CLDR item path |
 
 
 <a name="development"></a>
